@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  web:
+    image: "php:8.0-apache"
+    depends_on:
+      - db
+    restart: 'always'
+    links:
+      - db
+    ports:
+      - '80:80'
+    volumes:
+      - ./website:/var/www/html/
+  db:
+    image: "mariadb:10.6.4"
+    restart: 'always'
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "abstergo"
+      MYSQL_USER: "user"
+      MYSQL_PASSWORD: "user"
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
